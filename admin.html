@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Administrativo — MRI Service</title>
+<meta name="description" content="Painel de gestão administrativa e catálogo de peças.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://mriservice.com.br/admin.html">
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+<link rel="shortcut icon" href="assets/favicon.ico">
+<link rel="apple-touch-icon" href="assets/logo.png">
+<meta property="og:title" content="Painel Administrativo — MRI Service">
+<meta property="og:description" content="Painel de gestão administrativa e catálogo de peças.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/logo.png">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Painel Administrativo — MRI Service">
+<meta name="twitter:description" content="Painel de gestão administrativa e catálogo de peças.">
+<meta name="twitter:image" content="assets/logo.png">
+<link rel="stylesheet" href="css/style.css?v=43">
+</head>
+<body class="admin-page">
+
+<header class="admin-topbar">
+  <div class="admin-topbar__brand">
+    <img src="assets/logo.png" alt="MRIservice">
+    <span class="admin-topbar__title">Painel Admin</span>
+  </div>
+  <button type="button" class="admin-logout" id="logoutBtn">Sair</button>
+</header>
+
+<main class="admin-main">
+  <nav class="admin-tabs">
+    <button type="button" class="admin-tab is-active" data-tab="pecas">Peças e Componentes</button>
+    <button type="button" class="admin-tab" data-tab="contatos">Contatos</button>
+  </nav>
+
+  <section class="admin-panel is-active" id="panel-pecas">
+    <div class="admin-panel__header">
+      <h1 class="admin-panel__title">Peças e Componentes</h1>
+      <button type="button" class="admin-btn" id="newPartBtn">+ Nova Peça</button>
+    </div>
+
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Foto</th>
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Destaque</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="partsTableBody"></tbody>
+      </table>
+      <p class="admin-empty" id="partsEmpty" hidden>Nenhuma peça cadastrada ainda. Clique em "+ Nova Peça" para começar.</p>
+    </div>
+  </section>
+
+  <section class="admin-panel" id="panel-contatos">
+    <div class="admin-panel__header">
+      <h1 class="admin-panel__title">Mensagens de Contato</h1>
+    </div>
+
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Empresa</th>
+            <th>Telefone</th>
+            <th>Equipamento</th>
+            <th>Urgência</th>
+            <th>Data</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="contactsTableBody"></tbody>
+      </table>
+      <p class="admin-empty" id="contactsEmpty" hidden>Nenhuma mensagem recebida ainda.</p>
+    </div>
+  </section>
+</main>
+
+<!-- Modal: adicionar/editar peça -->
+<div class="admin-modal-overlay" id="partModalOverlay">
+  <div class="admin-modal">
+    <div class="admin-modal__header">
+      <h2 class="admin-modal__title" id="partModalTitle">Nova Peça</h2>
+      <button type="button" class="admin-modal__close" data-close-modal="partModalOverlay">&times;</button>
+    </div>
+
+    <form class="admin-form" id="partForm">
+      <input type="hidden" id="part-id">
+
+      <div class="contact-form__field">
+        <label class="contact-form__label" for="part-name">Nome da peça</label>
+        <input class="contact-form__input" type="text" id="part-name" required>
+      </div>
+
+      <div class="contact-form__field">
+        <label class="contact-form__label" for="part-category">Categoria</label>
+        <select class="contact-form__input" id="part-category" required></select>
+      </div>
+
+      <div class="contact-form__field">
+        <label class="contact-form__label" for="part-short-description">Descrição (hero)</label>
+        <textarea class="contact-form__input contact-form__textarea" id="part-short-description" rows="2" required></textarea>
+      </div>
+
+      <div class="contact-form__field">
+        <label class="contact-form__label" for="part-about">Sobre a peça</label>
+        <textarea class="contact-form__input contact-form__textarea" id="part-about" rows="4" required></textarea>
+      </div>
+
+      <div class="admin-form__row">
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="part-model">Modelo</label>
+          <input class="contact-form__input" type="text" id="part-model">
+        </div>
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="part-manufacturer">Fabricante</label>
+          <input class="contact-form__input" type="text" id="part-manufacturer">
+        </div>
+      </div>
+
+      <div class="admin-form__row">
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="part-weight">Peso</label>
+          <input class="contact-form__input" type="text" id="part-weight" placeholder="Ex: 2,4 kg">
+        </div>
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="part-warranty">Garantia</label>
+          <input class="contact-form__input" type="text" id="part-warranty" placeholder="Ex: 6 meses">
+        </div>
+      </div>
+
+      <div class="contact-form__field">
+        <label class="contact-form__label">Fotos</label>
+        <div class="admin-photos" id="partPhotos"></div>
+        <input class="admin-file-input" type="file" id="part-photos-input" accept="image/*" multiple>
+      </div>
+
+      <label class="admin-form__checkbox" id="part-featured-label">
+        <input type="checkbox" id="part-is-featured">
+        Fixar em "Componentes em Destaque" (máx. 5)
+      </label>
+      <p class="admin-form__hint" id="featuredLimitHint" hidden>Limite de 5 peças fixadas atingido. Desmarque outra peça antes de fixar esta.</p>
+
+      <p class="admin-form__error" id="partFormError" hidden></p>
+
+      <div class="admin-form__actions">
+        <button type="button" class="admin-btn admin-btn--ghost" data-close-modal="partModalOverlay">Cancelar</button>
+        <button type="submit" class="admin-btn" id="partFormSubmit">Salvar Peça</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: detalhe da mensagem de contato -->
+<div class="admin-modal-overlay" id="contactModalOverlay">
+  <div class="admin-modal">
+    <div class="admin-modal__header">
+      <h2 class="admin-modal__title">Mensagem de Contato</h2>
+      <button type="button" class="admin-modal__close" data-close-modal="contactModalOverlay">&times;</button>
+    </div>
+    <div id="contactModalBody"></div>
+  </div>
+</div>
+
+<!-- Modal: editar mensagem de contato -->
+<div class="admin-modal-overlay" id="contactEditModalOverlay">
+  <div class="admin-modal">
+    <div class="admin-modal__header">
+      <h2 class="admin-modal__title">Editar Mensagem de Contato</h2>
+      <button type="button" class="admin-modal__close" data-close-modal="contactEditModalOverlay">&times;</button>
+    </div>
+
+    <form class="admin-form" id="contactEditForm">
+      <input type="hidden" id="contact-edit-id">
+
+      <div class="admin-form__row">
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="contact-edit-nome">Nome completo</label>
+          <input class="contact-form__input" type="text" id="contact-edit-nome">
+        </div>
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="contact-edit-cargo">Cargo / Função</label>
+          <input class="contact-form__input" type="text" id="contact-edit-cargo">
+        </div>
+      </div>
+
+      <div class="admin-form__row">
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="contact-edit-email">E-mail</label>
+          <input class="contact-form__input" type="email" id="contact-edit-email">
+        </div>
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="contact-edit-telefone">Telefone</label>
+          <input class="contact-form__input" type="text" id="contact-edit-telefone">
+        </div>
+      </div>
+
+      <div class="admin-form__row">
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="contact-edit-empresa">Empresa</label>
+          <input class="contact-form__input" type="text" id="contact-edit-empresa">
+        </div>
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="contact-edit-cnpj">CNPJ</label>
+          <input class="contact-form__input" type="text" id="contact-edit-cnpj">
+        </div>
+      </div>
+
+      <div class="admin-form__row">
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="contact-edit-cidade">Cidade</label>
+          <input class="contact-form__input" type="text" id="contact-edit-cidade">
+        </div>
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="contact-edit-estado">Estado</label>
+          <input class="contact-form__input" type="text" id="contact-edit-estado" maxlength="2">
+        </div>
+      </div>
+
+      <div class="admin-form__row">
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="contact-edit-equipamento">Equipamento</label>
+          <input class="contact-form__input" type="text" id="contact-edit-equipamento">
+        </div>
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="contact-edit-urgencia">Urgência</label>
+          <input class="contact-form__input" type="text" id="contact-edit-urgencia">
+        </div>
+      </div>
+
+      <div class="contact-form__field">
+        <label class="contact-form__label" for="contact-edit-mensagem">Descrição do problema</label>
+        <textarea class="contact-form__input contact-form__textarea" id="contact-edit-mensagem" rows="4"></textarea>
+      </div>
+
+      <p class="admin-form__error" id="contactEditFormError" hidden></p>
+
+      <div class="admin-form__actions">
+        <button type="button" class="admin-btn admin-btn--ghost" data-close-modal="contactEditModalOverlay">Cancelar</button>
+        <button type="submit" class="admin-btn" id="contactEditFormSubmit">Salvar Alterações</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="js/vendor/supabase.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/auth-guard.js?v=5"></script>
+<script src="js/admin.js?v=8"></script>
+</body>
+</html>

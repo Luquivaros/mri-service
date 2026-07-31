@@ -1,0 +1,7 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Facebook">
+<rect x="0.5" y="0.5" width="63" height="63" rx="31.5" fill="var(--fill-0, white)" fill-opacity="0.1"/>
+<rect x="0.5" y="0.5" width="63" height="63" rx="31.5" stroke="var(--stroke-0, white)"/>
+<path id="Vector" d="M34.6667 34.4H38.4762L40 28H34.6667V24.8C34.6667 23.152 34.6667 21.6 37.7143 21.6H40V16.224C39.5032 16.1552 37.6274 16 35.6465 16C31.5093 16 28.5714 18.6512 28.5714 23.52V28H24V34.4H28.5714V48H34.6667V34.4Z" fill="var(--fill-0, white)"/>
+</g>
+</svg>

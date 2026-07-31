@@ -1,0 +1,11 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Ícone">
+<rect x="0.5" y="0.5" width="37" height="37" rx="18.5" fill="var(--fill-0, white)" fill-opacity="0.1"/>
+<rect x="0.5" y="0.5" width="37" height="37" rx="18.5" stroke="var(--stroke-0, white)"/>
+<g stroke="var(--stroke-0, white)" stroke-width="2.2" stroke-linecap="round">
+<path d="M19 11L19 27"/>
+<path d="M23 25.93L15 12.07"/>
+<path d="M23 12.07L15 25.93"/>
+</g>
+</g>
+</svg>

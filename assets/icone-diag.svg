@@ -1,0 +1,7 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="51" height="51" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="&#195;&#141;cone">
+<rect x="0.5" y="0.5" width="50" height="50" rx="25" fill="var(--fill-0, white)" fill-opacity="0.1"/>
+<rect x="0.5" y="0.5" width="50" height="50" rx="25" stroke="var(--stroke-0, white)"/>
+<path id="Vector" d="M18.5 18.5V30.1379H20.8513V22.558L30.8036 32.5L32.5 30.8054L22.533 20.8475H30.1501V18.5H18.5Z" fill="var(--fill-0, white)"/>
+</g>
+</svg>

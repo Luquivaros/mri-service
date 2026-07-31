@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acesso Restrito — MRI Service</title>
+<meta name="description" content="Autenticação administrativa.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://mriservice.com.br/login.html">
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+<link rel="shortcut icon" href="assets/favicon.ico">
+<link rel="apple-touch-icon" href="assets/logo.png">
+<meta property="og:title" content="Acesso Restrito — MRI Service">
+<meta property="og:description" content="Autenticação administrativa.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/logo.png">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Acesso Restrito — MRI Service">
+<meta name="twitter:description" content="Autenticação administrativa.">
+<meta name="twitter:image" content="assets/logo.png">
+<link rel="stylesheet" href="css/style.css?v=43">
+</head>
+<body class="login-page">
+
+<div class="login-card">
+  <img src="assets/logo.png" alt="MRIservice" class="login-card__logo">
+  <h1 class="login-card__title">Acesso Admin</h1>
+  <p class="login-card__subtitle">Entre com sua conta para gerenciar peças, componentes e mensagens de contato.</p>
+
+  <form id="loginForm" class="login-form">
+    <div class="contact-form__field">
+      <label class="contact-form__label" for="login-email">E-mail</label>
+      <input class="contact-form__input" type="email" id="login-email" name="email" placeholder="voce@mriservice.com" required>
+    </div>
+
+    <div class="contact-form__field">
+      <label class="contact-form__label" for="login-password">Senha</label>
+      <input class="contact-form__input" type="password" id="login-password" name="password" placeholder="••••••••" required>
+    </div>
+
+    <p class="login-form__error" id="loginError" hidden></p>
+
+    <button type="submit" class="btn btn--primary login-form__submit">
+      Entrar
+      <img src="assets/icone-arrow.svg" alt="" class="btn__icon">
+    </button>
+  </form>
+
+  <a href="index.html" class="login-card__back">← Voltar para o site</a>
+</div>
+
+<script src="js/vendor/supabase.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/login.js?v=5"></script>
+</body>
+</html>

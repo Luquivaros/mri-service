@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "hero-preview",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["--yes", "serve", "."],
+      "port": 5173,
+      "autoPort": true
+    }
+  ]
+}
