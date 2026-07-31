@@ -10,6 +10,7 @@ runWhenReady(() => {
   initDropdowns();
   initNavbarPill();
   initNavbarAutoHide();
+  initMobileMenu();
   initContactForm();
   initFormMasks();
   initCustomSelects();
@@ -718,3 +719,112 @@ function initHeroSequence() {
   render();
   requestAnimationFrame(animateFrame);
 }
+
+function initMobileMenu() {
+  const navbar = document.querySelector('.navbar');
+  if (!navbar) return;
+
+  if (navbar.querySelector('.navbar__hamburger')) return;
+
+  const toggleBtn = document.createElement('button');
+  toggleBtn.type = 'button';
+  toggleBtn.className = 'navbar__hamburger';
+  toggleBtn.setAttribute('aria-label', 'Abrir menu de navegação');
+  toggleBtn.innerHTML = `
+    <span class="hamburger__bar"></span>
+    <span class="hamburger__bar"></span>
+    <span class="hamburger__bar"></span>
+  `;
+  navbar.appendChild(toggleBtn);
+
+  const drawer = document.createElement('div');
+  drawer.className = 'mobile-drawer';
+  drawer.id = 'mobileDrawer';
+  drawer.innerHTML = `
+    <div class="mobile-drawer__overlay" id="mobileDrawerOverlay"></div>
+    <div class="mobile-drawer__content">
+      <div class="mobile-drawer__header">
+        <a href="index.html" class="mobile-drawer__logo">
+          <img src="assets/logo.png" alt="MRIservice">
+        </a>
+        <button type="button" class="mobile-drawer__close" id="mobileDrawerClose" aria-label="Fechar menu">&times;</button>
+      </div>
+
+      <nav class="mobile-drawer__nav">
+        <a href="index.html" class="mobile-drawer__link">Home</a>
+        <a href="sobre.html" class="mobile-drawer__link">Sobre</a>
+
+        <div class="mobile-drawer__accordion">
+          <button type="button" class="mobile-drawer__accordion-trigger">
+            Soluções
+            <svg class="mobile-drawer__chevron" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1.5 1.5L6 6l4.5-4.5"></path>
+            </svg>
+          </button>
+          <div class="mobile-drawer__accordion-panel">
+            <a href="de-icing.html" class="mobile-drawer__sublink">De-Icing</a>
+            <a href="ramp-up.html" class="mobile-drawer__sublink">Ramp Up</a>
+            <a href="cooling-down.html" class="mobile-drawer__sublink">Cooling Down</a>
+            <a href="safemonitor.html" class="mobile-drawer__sublink">SafeMonitor</a>
+            <a href="reparo-de-modulos.html" class="mobile-drawer__sublink">Reparo de Módulos</a>
+            <a href="reparo-de-bobina.html" class="mobile-drawer__sublink">Reparo de Bobina</a>
+            <a href="manutencao-preventiva-e-corretiva.html" class="mobile-drawer__sublink">Manutenção Preventiva</a>
+            <a href="criogenia-e-monitoramento.html" class="mobile-drawer__sublink">Criogenia e Monitoramento</a>
+            <a href="pecas-e-componentes.html" class="mobile-drawer__sublink">Peças e Componentes</a>
+          </div>
+        </div>
+
+        <a href="safemonitor.html" class="mobile-drawer__link">WebMonitor</a>
+        <a href="contato.html" class="mobile-drawer__link">Contato</a>
+      </nav>
+
+      <div class="mobile-drawer__footer">
+        <a href="https://wa.me/5511913766579" target="_blank" rel="noopener" class="btn btn--primary mobile-drawer__cta">
+          Fale no WhatsApp
+          <img src="assets/icone-whatsapp-solid.svg" alt="" class="btn__icon--whatsapp">
+        </a>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(drawer);
+
+  const overlay = drawer.querySelector('#mobileDrawerOverlay');
+  const closeBtn = drawer.querySelector('#mobileDrawerClose');
+  const accordionTrigger = drawer.querySelector('.mobile-drawer__accordion-trigger');
+  const accordionPanel = drawer.querySelector('.mobile-drawer__accordion-panel');
+
+  function openMenu() {
+    drawer.classList.add('is-open');
+    toggleBtn.classList.add('is-active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    drawer.classList.remove('is-open');
+    toggleBtn.classList.remove('is-active');
+    document.body.style.overflow = '';
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    if (drawer.classList.contains('is-open')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+  if (overlay) overlay.addEventListener('click', closeMenu);
+
+  if (accordionTrigger && accordionPanel) {
+    accordionTrigger.addEventListener('click', () => {
+      const isOpen = accordionTrigger.classList.toggle('is-open');
+      accordionPanel.style.maxHeight = isOpen ? accordionPanel.scrollHeight + 'px' : '0px';
+    });
+  }
+
+  drawer.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+}
+
