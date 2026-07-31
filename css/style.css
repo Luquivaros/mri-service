@@ -5071,6 +5071,12 @@ a.contact-info__value:hover {
   }
 }
 
+/* Base hiding of mobile drawer & hamburger on desktop (> 991px) */
+.navbar__hamburger,
+.mobile-drawer {
+  display: none;
+}
+
 /* ==========================================
    STRICTLY MOBILE-FIRST OVERRIDES (< 991px)
    ========================================== */
@@ -5104,7 +5110,7 @@ a.contact-info__value:hover {
   }
 
   .navbar__hamburger {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -5116,6 +5122,10 @@ a.contact-info__value:hover {
     background: none;
     cursor: pointer;
     z-index: 1001;
+  }
+
+  .mobile-drawer {
+    display: block !important;
   }
 
   .hamburger__bar {
@@ -5305,12 +5315,20 @@ a.contact-info__value:hover {
   }
 
   .page-hero {
-    padding-top: 100px !important;
+    padding-top: 110px !important;
     padding-bottom: 60px !important;
+  }
+
+  .hero__stages,
+  .hero__stage,
+  .hero__row,
+  .page-hero__content {
+    padding-top: 80px !important;
   }
 
   .hero {
     min-height: auto !important;
   }
 }
+
 
