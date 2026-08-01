@@ -9,7 +9,7 @@ function runWhenReady(fn) {
 runWhenReady(() => {
   initDropdowns();
   initNavbarPill();
-  initNavbarAutoHide();
+  initNavbarScrolled();
   initMobileMenu();
   initContactForm();
   initFormMasks();
@@ -199,45 +199,21 @@ function initNavbarPill() {
   });
 }
 
-function initNavbarAutoHide() {
+function initNavbarScrolled() {
   const navbar = document.querySelector('.navbar');
   if (!navbar) return;
 
-  // Aplica o efeito exclusivamente na página Home (.hero)
-  const isHome = !!document.querySelector('.hero') || window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '';
-  if (!isHome) {
-    navbar.classList.remove('navbar--hidden');
-    return;
-  }
-
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion) return;
-
-  let lastScrollY = Math.max(0, window.scrollY);
-
-  function closeOpenDropdown() {
-    const openItem = navbar.querySelector('.navbar__item.is-open');
-    if (!openItem) return;
-    openItem.classList.remove('is-open');
-    const trigger = openItem.querySelector('.navbar__dropdown-trigger');
-    if (trigger) trigger.setAttribute('aria-expanded', 'false');
-  }
+  navbar.classList.remove('navbar--hidden');
 
   function onScroll() {
-    const currentScrollY = Math.max(0, window.scrollY);
-
-    if (currentScrollY > 20 && currentScrollY > lastScrollY) {
-      // Rolou para baixo: oculta a navbar na Home
-      navbar.classList.add('navbar--hidden');
-      closeOpenDropdown();
-    } else if (currentScrollY < lastScrollY || currentScrollY <= 20) {
-      // Rolou para cima ou está no topo: reexibe a navbar na Home
-      navbar.classList.remove('navbar--hidden');
+    if (window.scrollY > 20) {
+      navbar.classList.add('navbar--scrolled');
+    } else {
+      navbar.classList.remove('navbar--scrolled');
     }
-
-    lastScrollY = currentScrollY;
   }
 
+  onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 }
 
