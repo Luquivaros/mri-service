@@ -203,13 +203,17 @@ function initNavbarAutoHide() {
   const navbar = document.querySelector('.navbar');
   if (!navbar) return;
 
+  // Aplica o efeito exclusivamente na página Home (.hero)
+  const isHome = !!document.querySelector('.hero') || window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '';
+  if (!isHome) {
+    navbar.classList.remove('navbar--hidden');
+    return;
+  }
+
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduceMotion) return;
 
   let lastScrollY = Math.max(0, window.scrollY);
-  let lastConfirmedY = lastScrollY;
-  let ticking = false;
-  const HIDE_THRESHOLD = 10;
 
   function closeOpenDropdown() {
     const openItem = navbar.querySelector('.navbar__item.is-open');
@@ -220,27 +224,18 @@ function initNavbarAutoHide() {
   }
 
   function onScroll() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      const currentScrollY = Math.max(0, window.scrollY);
+    const currentScrollY = Math.max(0, window.scrollY);
 
-      if (currentScrollY < lastScrollY) {
-        // Scrolling up: reappear immediately, even by a few pixels.
-        navbar.classList.remove('navbar--hidden');
-        lastConfirmedY = currentScrollY;
-      } else if (currentScrollY > lastScrollY) {
-        // Scrolling down: only hide past a small threshold, and never right at the top.
-        if (currentScrollY > navbar.offsetHeight && currentScrollY - lastConfirmedY > HIDE_THRESHOLD) {
-          navbar.classList.add('navbar--hidden');
-          closeOpenDropdown();
-          lastConfirmedY = currentScrollY;
-        }
-      }
+    if (currentScrollY > 20 && currentScrollY > lastScrollY) {
+      // Rolou para baixo: oculta a navbar na Home
+      navbar.classList.add('navbar--hidden');
+      closeOpenDropdown();
+    } else if (currentScrollY < lastScrollY || currentScrollY <= 20) {
+      // Rolou para cima ou está no topo: reexibe a navbar na Home
+      navbar.classList.remove('navbar--hidden');
+    }
 
-      lastScrollY = currentScrollY;
-      ticking = false;
-    });
+    lastScrollY = currentScrollY;
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
