@@ -104,7 +104,7 @@ function initDropdowns() {
       left = Math.min(left, window.innerWidth - dropW - 16);
       // Evita sair pela esquerda
       left = Math.max(left, 16);
-      dropdown.style.top = (triggerRect.bottom + 8) + 'px';
+      dropdown.style.top = (triggerRect.bottom + 20) + 'px';
       dropdown.style.left = left + 'px';
     }
 
