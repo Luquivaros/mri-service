@@ -156,9 +156,9 @@ a {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12.5px);
+  -webkit-backdrop-filter: blur(12.5px);
   transition: background 0.3s ease, backdrop-filter 0.3s ease;
 }
 
@@ -174,9 +174,9 @@ a {
 }
 
 .navbar--scrolled::before {
-  background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12.5px);
+  -webkit-backdrop-filter: blur(12.5px);
 }
 
 .navbar--scrolled::after {
@@ -274,10 +274,10 @@ a {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12.5px);
+  -webkit-backdrop-filter: blur(12.5px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 20px;
   padding: 20px;
   box-shadow: none;
@@ -5196,15 +5196,16 @@ a.contact-info__value:hover {
     bottom: 0;
     width: 85%;
     max-width: 360px;
-    background: #081a20;
-    border-left: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12.5px);
+    -webkit-backdrop-filter: blur(12.5px);
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
     display: flex;
     flex-direction: column;
     padding: 20px;
     overflow-y: auto;
     transform: translateX(100%);
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
   }
 
   .mobile-drawer.is-open .mobile-drawer__content {
