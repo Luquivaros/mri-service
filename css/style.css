@@ -260,10 +260,10 @@ a {
 }
 
 .navbar__dropdown {
-  position: absolute;
-  top: calc(100% + 14px);
+  position: fixed;
+  top: 50px;
   left: var(--gutter);
-  z-index: 40;
+  z-index: 49;
   width: max-content;
   min-width: 260px;
   display: flex;
