@@ -9,7 +9,7 @@ function runWhenReady(fn) {
 runWhenReady(() => {
   initDropdowns();
   initNavbarPill();
-  initNavbarScrolled();
+  initNavbarSmartScroll();
   initMobileMenu();
   initContactForm();
   initFormMasks();
@@ -199,21 +199,55 @@ function initNavbarPill() {
   });
 }
 
-function initNavbarScrolled() {
+function initNavbarSmartScroll() {
   const navbar = document.querySelector('.navbar');
   if (!navbar) return;
 
-  navbar.classList.remove('navbar--hidden');
+  let lastScrollY = Math.max(0, window.scrollY);
+  let ticking = false;
+
+  function closeOpenDropdown() {
+    const openItem = navbar.querySelector('.navbar__item.is-open');
+    if (!openItem) return;
+    openItem.classList.remove('is-open');
+    const trigger = openItem.querySelector('.navbar__dropdown-trigger');
+    if (trigger) trigger.setAttribute('aria-expanded', 'false');
+  }
+
+  function updateNavbar() {
+    const currentScrollY = Math.max(0, window.scrollY);
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const isMobileDrawerOpen = mobileDrawer && mobileDrawer.classList.contains('is-open');
+
+    if (isMobileDrawerOpen) {
+      navbar.classList.remove('navbar--hidden');
+      ticking = false;
+      return;
+    }
+
+    if (currentScrollY <= 10) {
+      navbar.classList.remove('navbar--hidden');
+      navbar.classList.remove('navbar--scrolled');
+    } else if (currentScrollY > lastScrollY && currentScrollY > 40) {
+      navbar.classList.add('navbar--hidden');
+      closeOpenDropdown();
+    } else if (currentScrollY < lastScrollY) {
+      navbar.classList.remove('navbar--hidden');
+      navbar.classList.add('navbar--scrolled');
+    }
+
+    lastScrollY = currentScrollY;
+    ticking = false;
+  }
 
   function onScroll() {
-    if (window.scrollY > 20) {
-      navbar.classList.add('navbar--scrolled');
-    } else {
-      navbar.classList.remove('navbar--scrolled');
+    if (!ticking) {
+      requestAnimationFrame(updateNavbar);
+      ticking = true;
     }
   }
 
-  onScroll();
+  updateNavbar();
   window.addEventListener('scroll', onScroll, { passive: true });
 }
 
