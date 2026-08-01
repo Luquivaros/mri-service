@@ -9,7 +9,7 @@ function runWhenReady(fn) {
 runWhenReady(() => {
   initDropdowns();
   initNavbarPill();
-  initNavbarSmartScroll();
+  initNavbarTopOnly();
   initMobileMenu();
   initContactForm();
   initFormMasks();
@@ -199,12 +199,9 @@ function initNavbarPill() {
   });
 }
 
-function initNavbarSmartScroll() {
+function initNavbarTopOnly() {
   const navbar = document.querySelector('.navbar');
   if (!navbar) return;
-
-  let lastScrollY = Math.max(0, window.scrollY);
-  let ticking = false;
 
   function closeOpenDropdown() {
     const openItem = navbar.querySelector('.navbar__item.is-open');
@@ -221,34 +218,22 @@ function initNavbarSmartScroll() {
 
     if (isMobileDrawerOpen) {
       navbar.classList.remove('navbar--hidden');
-      ticking = false;
       return;
     }
 
-    if (currentScrollY <= 10) {
+    // A navbar SÓ fica visível quando o usuário está no topo inicial do site (seção hero <= 80px)
+    const TOP_THRESHOLD = 80;
+    if (currentScrollY <= TOP_THRESHOLD) {
       navbar.classList.remove('navbar--hidden');
       navbar.classList.remove('navbar--scrolled');
-    } else if (currentScrollY > lastScrollY && currentScrollY > 40) {
+    } else {
       navbar.classList.add('navbar--hidden');
       closeOpenDropdown();
-    } else if (currentScrollY < lastScrollY) {
-      navbar.classList.remove('navbar--hidden');
-      navbar.classList.add('navbar--scrolled');
-    }
-
-    lastScrollY = currentScrollY;
-    ticking = false;
-  }
-
-  function onScroll() {
-    if (!ticking) {
-      requestAnimationFrame(updateNavbar);
-      ticking = true;
     }
   }
 
   updateNavbar();
-  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('scroll', updateNavbar, { passive: true });
 }
 
 function initContactForm() {
