@@ -156,9 +156,9 @@ a {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgba(6, 24, 29, 0.72);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -169,19 +169,19 @@ a {
   right: var(--gutter);
   bottom: 0;
   height: 1px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.3);
   transition: background 0.3s ease, left 0.3s ease, right 0.3s ease;
 }
 
 .navbar--scrolled::before {
-  background: rgba(6, 24, 29, 0.94);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .navbar--scrolled::after {
-  background: rgba(0, 174, 227, 0.4);
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .navbar__logo {
@@ -275,13 +275,13 @@ a {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  background: rgba(6, 24, 29, 0.88);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 20px;
   padding: 20px;
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
