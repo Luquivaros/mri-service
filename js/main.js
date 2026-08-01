@@ -87,22 +87,32 @@ function initDropdowns() {
     const dropdown = navbar ? navbar.querySelector('.navbar__dropdown') : null;
     if (!trigger) return;
 
+    // === PORTAL: move o dropdown para o body, fora do stacking context do navbar ===
+    if (dropdown && dropdown.parentElement !== document.body) {
+      document.body.appendChild(dropdown);
+    }
+
     let pinned = false;
     let closeTimer = null;
 
     function positionDropdown() {
-      if (!dropdown || !navbar) return;
+      if (!dropdown) return;
       const triggerRect = trigger.getBoundingClientRect();
-      const navbarRect = navbar.getBoundingClientRect();
-      const dropdownWidth = dropdown.getBoundingClientRect().width;
-      const triggerCenter = triggerRect.left + triggerRect.width / 2;
-      dropdown.style.left = triggerCenter - navbarRect.left - dropdownWidth / 2 + 'px';
+      const dropW = dropdown.offsetWidth || 260;
+      let left = triggerRect.left + triggerRect.width / 2 - dropW / 2;
+      // Evita sair da viewport pela direita
+      left = Math.min(left, window.innerWidth - dropW - 16);
+      // Evita sair pela esquerda
+      left = Math.max(left, 16);
+      dropdown.style.top = (triggerRect.bottom + 8) + 'px';
+      dropdown.style.left = left + 'px';
     }
 
     function show() {
       clearTimeout(closeTimer);
       positionDropdown();
       item.classList.add('is-open');
+      if (dropdown) dropdown.classList.add('is-open');
       trigger.setAttribute('aria-expanded', 'true');
     }
 
@@ -110,6 +120,7 @@ function initDropdowns() {
       clearTimeout(closeTimer);
       pinned = false;
       item.classList.remove('is-open');
+      if (dropdown) dropdown.classList.remove('is-open');
       trigger.setAttribute('aria-expanded', 'false');
     }
 

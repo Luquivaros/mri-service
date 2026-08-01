@@ -264,7 +264,7 @@ a {
   position: fixed;
   top: 58px;
   left: var(--gutter);
-  z-index: 49;
+  z-index: 200;
   width: max-content;
   min-width: 260px;
   display: flex;
@@ -284,7 +284,7 @@ a {
   transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
 }
 
-.navbar:has(.navbar__item.is-open) .navbar__dropdown {
+.navbar__dropdown.is-open {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
